@@ -1,0 +1,186 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		CC331A3A13F2B56E00998821 /* liblibpws.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = liblibpws.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CC331A3713F2B56E00998821 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CC331A2F13F2B56E00998821 = {
+			isa = PBXGroup;
+			children = (
+				CC331A3B13F2B56E00998821 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CC331A3B13F2B56E00998821 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CC331A3A13F2B56E00998821 /* liblibpws.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		CC331A3813F2B56E00998821 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		CC331A3913F2B56E00998821 /* libpws */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC331A3E13F2B56E00998821 /* Build configuration list for PBXNativeTarget "libpws" */;
+			buildPhases = (
+				CC331A3613F2B56E00998821 /* Sources */,
+				CC331A3713F2B56E00998821 /* Frameworks */,
+				CC331A3813F2B56E00998821 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libpws;
+			productName = libpws;
+			productReference = CC331A3A13F2B56E00998821 /* liblibpws.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CC331A3113F2B56E00998821 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = CC331A3413F2B56E00998821 /* Build configuration list for PBXProject "libpws" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CC331A2F13F2B56E00998821;
+			productRefGroup = CC331A3B13F2B56E00998821 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CC331A3913F2B56E00998821 /* libpws */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CC331A3613F2B56E00998821 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CC331A3C13F2B56E00998821 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		CC331A3D13F2B56E00998821 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		CC331A3F13F2B56E00998821 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CC331A4013F2B56E00998821 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CC331A3413F2B56E00998821 /* Build configuration list for PBXProject "libpws" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC331A3C13F2B56E00998821 /* Debug */,
+				CC331A3D13F2B56E00998821 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC331A3E13F2B56E00998821 /* Build configuration list for PBXNativeTarget "libpws" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC331A3F13F2B56E00998821 /* Debug */,
+				CC331A4013F2B56E00998821 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CC331A3113F2B56E00998821 /* Project object */;
+}
