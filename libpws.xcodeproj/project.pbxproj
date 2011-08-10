@@ -6,8 +6,48 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CC331A4213F2B62100998821 /* hmac.c in Sources */ = {isa = PBXBuildFile; fileRef = CC331A4113F2B62100998821 /* hmac.c */; };
+		CC331A4413F2B64100998821 /* hmac.h in Headers */ = {isa = PBXBuildFile; fileRef = CC331A4313F2B64100998821 /* hmac.h */; };
+		CC331A4613F2B6A900998821 /* buf.h in Headers */ = {isa = PBXBuildFile; fileRef = CC331A4513F2B6A900998821 /* buf.h */; };
+		CC331A4813F2B6C900998821 /* buf.c in Sources */ = {isa = PBXBuildFile; fileRef = CC331A4713F2B6C900998821 /* buf.c */; };
+		CC331A4A13F2C2D200998821 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CC331A4913F2C2D200998821 /* libcrypto.dylib */; };
+		CC331A4C13F2C40B00998821 /* pws.c in Sources */ = {isa = PBXBuildFile; fileRef = CC331A4B13F2C40B00998821 /* pws.c */; };
+		CC331A4E13F2C45500998821 /* twofish.c in Sources */ = {isa = PBXBuildFile; fileRef = CC331A4D13F2C45500998821 /* twofish.c */; };
+		CC331A5013F2C46800998821 /* twofish.h in Headers */ = {isa = PBXBuildFile; fileRef = CC331A4F13F2C46800998821 /* twofish.h */; };
+		CC331A5913F2C4BA00998821 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = CC331A5813F2C4BA00998821 /* main.c */; };
+		CC331A5B13F2C4BA00998821 /* pws.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = CC331A5A13F2C4BA00998821 /* pws.1 */; };
+		CC331A6013F2C6C500998821 /* pws.h in Headers */ = {isa = PBXBuildFile; fileRef = CC331A5F13F2C6C500998821 /* pws.h */; };
+		CC331A6113F2C74300998821 /* liblibpws.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CC331A3A13F2B56E00998821 /* liblibpws.dylib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CC331A5313F2C4BA00998821 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				CC331A5B13F2C4BA00998821 /* pws.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		CC331A3A13F2B56E00998821 /* liblibpws.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = liblibpws.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC331A4113F2B62100998821 /* hmac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hmac.c; sourceTree = "<group>"; };
+		CC331A4313F2B64100998821 /* hmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hmac.h; sourceTree = "<group>"; };
+		CC331A4513F2B6A900998821 /* buf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buf.h; sourceTree = "<group>"; };
+		CC331A4713F2B6C900998821 /* buf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = buf.c; sourceTree = "<group>"; };
+		CC331A4913F2C2D200998821 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
+		CC331A4B13F2C40B00998821 /* pws.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pws.c; sourceTree = "<group>"; };
+		CC331A4D13F2C45500998821 /* twofish.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = twofish.c; sourceTree = "<group>"; };
+		CC331A4F13F2C46800998821 /* twofish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twofish.h; sourceTree = "<group>"; };
+		CC331A5513F2C4BA00998821 /* pws */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pws; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC331A5813F2C4BA00998821 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		CC331A5A13F2C4BA00998821 /* pws.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = pws.1; sourceTree = "<group>"; };
+		CC331A5F13F2C6C500998821 /* pws.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pws.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -15,6 +55,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC331A4A13F2C2D200998821 /* libcrypto.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC331A5213F2C4BA00998821 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC331A6113F2C74300998821 /* liblibpws.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -24,6 +73,16 @@
 		CC331A2F13F2B56E00998821 = {
 			isa = PBXGroup;
 			children = (
+				CC331A5F13F2C6C500998821 /* pws.h */,
+				CC331A4F13F2C46800998821 /* twofish.h */,
+				CC331A4D13F2C45500998821 /* twofish.c */,
+				CC331A4B13F2C40B00998821 /* pws.c */,
+				CC331A4913F2C2D200998821 /* libcrypto.dylib */,
+				CC331A4113F2B62100998821 /* hmac.c */,
+				CC331A4313F2B64100998821 /* hmac.h */,
+				CC331A4513F2B6A900998821 /* buf.h */,
+				CC331A4713F2B6C900998821 /* buf.c */,
+				CC331A5713F2C4BA00998821 /* pws */,
 				CC331A3B13F2B56E00998821 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -32,8 +91,18 @@
 			isa = PBXGroup;
 			children = (
 				CC331A3A13F2B56E00998821 /* liblibpws.dylib */,
+				CC331A5513F2C4BA00998821 /* pws */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CC331A5713F2C4BA00998821 /* pws */ = {
+			isa = PBXGroup;
+			children = (
+				CC331A5813F2C4BA00998821 /* main.c */,
+				CC331A5A13F2C4BA00998821 /* pws.1 */,
+			);
+			path = pws;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -43,6 +112,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC331A4413F2B64100998821 /* hmac.h in Headers */,
+				CC331A4613F2B6A900998821 /* buf.h in Headers */,
+				CC331A5013F2C46800998821 /* twofish.h in Headers */,
+				CC331A6013F2C6C500998821 /* pws.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +139,23 @@
 			productReference = CC331A3A13F2B56E00998821 /* liblibpws.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
+		CC331A5413F2C4BA00998821 /* pws */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC331A5C13F2C4BA00998821 /* Build configuration list for PBXNativeTarget "pws" */;
+			buildPhases = (
+				CC331A5113F2C4BA00998821 /* Sources */,
+				CC331A5213F2C4BA00998821 /* Frameworks */,
+				CC331A5313F2C4BA00998821 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = pws;
+			productName = pws;
+			productReference = CC331A5513F2C4BA00998821 /* pws */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -84,6 +174,7 @@
 			projectRoot = "";
 			targets = (
 				CC331A3913F2B56E00998821 /* libpws */,
+				CC331A5413F2C4BA00998821 /* pws */,
 			);
 		};
 /* End PBXProject section */
@@ -93,6 +184,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC331A4213F2B62100998821 /* hmac.c in Sources */,
+				CC331A4813F2B6C900998821 /* buf.c in Sources */,
+				CC331A4C13F2C40B00998821 /* pws.c in Sources */,
+				CC331A4E13F2C45500998821 /* twofish.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC331A5113F2C4BA00998821 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC331A5913F2C4BA00998821 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +263,20 @@
 			};
 			name = Release;
 		};
+		CC331A5D13F2C4BA00998821 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CC331A5E13F2C4BA00998821 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -177,6 +294,14 @@
 			buildConfigurations = (
 				CC331A3F13F2B56E00998821 /* Debug */,
 				CC331A4013F2B56E00998821 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		CC331A5C13F2C4BA00998821 /* Build configuration list for PBXNativeTarget "pws" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC331A5D13F2C4BA00998821 /* Debug */,
+				CC331A5E13F2C4BA00998821 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
