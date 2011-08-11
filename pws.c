@@ -14,6 +14,7 @@
 #include "hmac.h"
 #include "buf.h"
 #include "pws.h"
+#include "decrypt.h"
 
 static void print_hex(unsigned char *data, int len)
 {
@@ -51,65 +52,6 @@ static void stretch(char *password, unsigned char *salt, int iterations, unsigne
     memcpy(target, tmp, 32);    
 }
 
-/** 
- * Reads and descrypts 32 bytes of data using the provided key in ECB mode and writes
- * the resulting data to the buffer referenced by result.
- */
-static void decrypt_twofish_ecb_32(unsigned char *key, unsigned char *buf, unsigned char *result)
-{
-    Twofish_key twokey;
-    Twofish_initialise();
-    Twofish_prepare_key(key, 32, &twokey);
-    Twofish_decrypt(&twokey, buf, result);
-    Twofish_decrypt(&twokey, buf + 16, result + 16);
-}
-
-typedef struct decryptor {
-    Twofish_key twokey;
-    unsigned char cbc_state[16];
-} decryptor;
-
-static void setup_decryptor(unsigned char *key, unsigned char *iv, unsigned char *hmac_key,
-        decryptor *dec)
-{
-    Twofish_initialise();
-    Twofish_prepare_key(key, 32, &dec->twokey);
-    memcpy(dec->cbc_state, iv, 16);
-}
-
-static void decrypt_cbc(decryptor *dec, unsigned char *in, unsigned char *out)
-{
-    unsigned int i;
-    Twofish_decrypt(&dec->twokey, in, out);
-    for (i = 0; i < 16; i++) {
-        out[i] = out[i] ^ dec->cbc_state[i];
-        dec->cbc_state[i] = in[i];
-    }
-}
-
-
-static void read_blocks(decryptor *dec, buf_state *buf)
-{
-    int field_size = 0;
-    unsigned char *p, tmp[16], *data_start;
-
-    
-    while (1) {
-        buf_read(buf, 16, &p);
-        if (memcmp(p, "PWS3-EOFPWS3-EOF", 16) == 0) {
-            printf("Found EOF marker\n");
-            break;
-        }
-        decrypt_cbc(dec, p, tmp);
-
-        field_size = read_uint32_le(tmp);
-        printf("record size: %d\n", field_size);
-        
-    
-        print_hex(tmp, 16);
-        
-    }
-}
 
 typedef struct field {
     int len;
@@ -118,12 +60,116 @@ typedef struct field {
     struct field *next;
 } field;
 
+typedef struct header {
+    unsigned char key[32], iv[16], hmac_key[32];
+} header;
+
+/**
+ * Reads the data blocks from buf and adds the found data to the fields linked list.
+ * 
+ * @return 0 on success, -1 if the checksum check fails.
+ */
+static int read_blocks(header *hdr, buf_state *buf, field **fields)
+{
+    int field_size, extra_blocks, i;
+    unsigned char *p, tmp[16], *data_target, hmac_data[32];
+    cbc_state cbc;
+    hmac_state hmac;
+    
+    decrypt_setup(&cbc, hdr->key, hdr->iv);
+    
+    hmac_init(&hmac, hdr->hmac_key, 32);
+    
+    while (1) {
+        buf_read(buf, 16, &p);
+        if (memcmp(p, "PWS3-EOFPWS3-EOF", 16) == 0) {
+            printf("Found EOF marker\n");
+            break;
+        }
+        decrypt_cbc(&cbc, p, tmp);
+
+        field_size = read_uint32_le(tmp);
+
+        if (field_size > 0) {
+            data_target = malloc(field_size);
+            memcpy(data_target, tmp + 5, field_size > 11 ? 11 : field_size);
+        }
+
+        extra_blocks = (field_size + 4) / 16;
+        
+        for (i = 0; i < extra_blocks; i++) {
+            int offset = 11 + (i * 16);
+            int len = field_size - offset > 16 ? 16 : field_size - offset;
+            buf_read(buf, 16, &p);
+            decrypt_cbc(&cbc, p, tmp);
+            memcpy(data_target + offset, tmp, len);
+        }
+        printf("record size: %d\n", field_size);
+        if (field_size > 0) {
+            print_hex(data_target, field_size);
+            hmac_update(&hmac, data_target, field_size);
+        }
+
+    }
+    buf_read(buf, 32, &p);
+    hmac_result(&hmac, hmac_data);
+    i = memcmp(hmac_data, p, 32); 
+    if (i == 0) {
+        return 0;
+    } else {
+        return -1;
+    }
+}
+
+/**
+ * Reads the fixed header fields from verifies the password and populdates 
+ * the header fields.
+ * 
+ * @return 0 on success, -1 if the password check fails.
+ */
+static int read_header(header *hdr, char *password, buf_state *buf)
+{
+    unsigned char *p, stretched[32], salt[32], hashed_stretched[32];
+    int iter, retval;
+    
+    buf_read(buf, 32, &p);
+    memcpy(salt, p, 32);
+
+    buf_read(buf, 4, &p);
+    iter = read_uint32_le(p);
+
+    stretch(password, salt, iter, stretched);
+    
+    SHA256(stretched, 32, hashed_stretched);    
+
+    buf_read(buf, 32, &p);
+    retval = memcmp(hashed_stretched, p, 32);
+    if (retval != 0) {
+        fprintf(stderr, "Wrong password\n");
+        buf_close(buf);
+        return -1;
+    } else {
+        printf("Password matched!\n");
+    }
+    
+    buf_read(buf, 32, &p);
+    decrypt_twofish_ecb_32(stretched, p, hdr->key);
+    buf_read(buf, 32, &p);
+    decrypt_twofish_ecb_32(stretched, p, hdr->hmac_key);    
+
+    buf_read(buf, 16, &p);
+    memcpy(hdr->iv, p, 16);
+    
+    
+    return 0;
+}
+
 int pws_read_safe(char *filename, char *password)
 {
-    int retval, iter;
-    unsigned char salt[32], stretched[32], hashed_stretched[32], k[32], l[32];
+    int retval;
+    header hdr;
     
-    decryptor dec;
+    field *fields;
     
     buf_state *buf;
     unsigned char *p;
@@ -139,48 +185,10 @@ int pws_read_safe(char *filename, char *password)
         return -1;
     }
     
-    buf_read(buf, 32, &p);
-    memcpy(salt, p, 32);
-    print_hex(salt,32);
-
-    buf_read(buf, 4, &p);
-    iter = read_uint32_le(p);
-
-    stretch(password, salt, iter, stretched);
+    read_header(&hdr, password, buf);
     
-    SHA256(stretched, 32, hashed_stretched);    
-
-    buf_read(buf, 32, &p);
-    retval = memcmp(hashed_stretched, p, 32);
-    if (retval != 0) {
-        fprintf(stderr, "Wrong password\n");
-        buf_close(buf);
-        return -3;
-    } else {
-        printf("Password matched!\n");
-    }
-    
-    buf_read(buf, 32, &p);
-    decrypt_twofish_ecb_32(stretched, p, k);
-    buf_read(buf, 32, &p);
-    decrypt_twofish_ecb_32(stretched, p, l);    
-
-    buf_read(buf, 16, &p);
-    setup_decryptor(k, p, l, &dec);
-    
-    read_blocks(&dec, buf);
-    
-    /*
-    retval = memcmp(hmac, buf + pos, 32);
-    if (retval != 0) {
-        fprintf(stderr, "Checksum mismatch\n");
-        close(fd);
-        return -4;
-    } else {
-        printf("Checksum matched\n");
-    }
-     */
-    
+    read_blocks(&hdr, buf, &fields);
+        
     buf_close(buf);
     return 0;
 }

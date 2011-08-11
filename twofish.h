@@ -9,6 +9,8 @@
  * use this code for any purpose as long as the copyright message is included
  * in the source code of this or any derived work.
  */
+#ifndef _twofish_h
+#define _twofish_h
 
 
 /*
@@ -177,3 +179,5 @@ extern void Twofish_decrypt(
                             Twofish_Byte c[16], 
                             Twofish_Byte p[16]
                             );
+
+#endif // _twofish_h
