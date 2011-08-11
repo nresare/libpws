@@ -185,10 +185,16 @@ int pws_read_safe(char *filename, char *password)
         return -1;
     }
     
-    read_header(&hdr, password, buf);
+    if ((retval = read_header(&hdr, password, buf))) {
+        buf_close(buf);
+        return retval;
+    }
+
     
-    read_blocks(&hdr, buf, &fields);
-        
+    if ((read_blocks(&hdr, buf, &fields))) {
+        buf_close(buf);
+        return retval;
+    }    
     buf_close(buf);
     return 0;
 }
