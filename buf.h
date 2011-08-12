@@ -2,7 +2,7 @@
 
 typedef struct buf_state {
     unsigned char *buf;
-    unsigned int start, end, size;
+    ssize_t start, end, size;
     int fd;
 } buf_state;
 

@@ -8,7 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <openssl/sha.h>
+#include "sph_sha2.h"
 
 #include "twofish.h"
 #include "hmac.h"
@@ -38,16 +38,18 @@ static unsigned int read_uint32_le(unsigned char *buf)
 static void stretch(char *password, unsigned char *salt, int iterations, unsigned char *target)
 {
     int i;
-    SHA256_CTX c;
+    sph_sha256_context c;
     unsigned char tmp[32];
     
-    SHA256_Init(&c);
-    SHA256_Update(&c, password, strlen(password));
-    SHA256_Update(&c, salt, 32);
-    SHA256_Final(tmp, &c);
+    sph_sha256_init(&c);
+    sph_sha256(&c, password, strlen(password));
+    sph_sha256(&c, salt, 32);
+    sph_sha256_close(&c, tmp);
     
     for (i = 0; i < iterations; i++) {
-      SHA256(tmp, 32, tmp);
+        sph_sha256_init(&c);
+        sph_sha256(&c, tmp, 32);
+        sph_sha256_close(&c, tmp);
     }
     memcpy(target, tmp, 32);    
 }
@@ -131,6 +133,7 @@ static int read_header(header *hdr, char *password, buf_state *buf)
 {
     unsigned char *p, stretched[32], salt[32], hashed_stretched[32];
     int iter, retval;
+    sph_sha256_context c;
     
     buf_read(buf, 32, &p);
     memcpy(salt, p, 32);
@@ -140,7 +143,9 @@ static int read_header(header *hdr, char *password, buf_state *buf)
 
     stretch(password, salt, iter, stretched);
     
-    SHA256(stretched, 32, hashed_stretched);    
+    sph_sha256_init(&c);
+    sph_sha256(&c, stretched, 32);
+    sph_sha256_close(&c, hashed_stretched);
 
     buf_read(buf, 32, &p);
     retval = memcmp(hashed_stretched, p, 32);

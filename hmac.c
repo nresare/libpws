@@ -1,8 +1,8 @@
 /* Copyright © 2011 Noa Resare */
 
 #include <string.h>
-#include <openssl/sha.h>
 
+#include "sph_sha2.h"
 #include "hmac.h"
 
 #ifdef TEST
@@ -22,39 +22,42 @@ void hmac_init(hmac_state *state, unsigned char *key, int key_length)
 {
     unsigned char tmp[BLOCK_SIZE] = {0};
     int i;
+    sph_sha256_context c;
 
     if (key_length > BLOCK_SIZE) {
-        SHA256(tmp, key_length, key);
+        sph_sha256_init(&c);
+        sph_sha256(&c, key, key_length);
+        sph_sha256_close(&c, tmp);
     } else {
         memcpy(tmp, key, key_length);
     }        
 
-    SHA256_Init(&state->inner);
-    SHA256_Init(&state->outer);
-    
+    sph_sha256_init(&state->inner);
+    sph_sha256_init(&state->outer);
+
     for (i = 0; i < BLOCK_SIZE; i++) {
         tmp[i] = tmp[i] ^ 0x36;
         
     }
-    SHA256_Update(&state->inner, tmp, BLOCK_SIZE);
+    sph_sha256(&state->inner, tmp, BLOCK_SIZE);
     for (i = 0; i < BLOCK_SIZE; i++) {
         tmp[i] = tmp[i] ^ (0x36 ^ 0x5c);
 
     }
-    SHA256_Update(&state->outer, tmp, BLOCK_SIZE);
+    sph_sha256(&state->outer, tmp, BLOCK_SIZE);
 }
 
 void hmac_update(hmac_state *state, unsigned char *data, int count)
 {
-    SHA256_Update(&state->inner, data, count);   
+    sph_sha256(&state->inner, data, count);
 }
 
 void hmac_result(hmac_state *state, unsigned char *result)
 {
     unsigned char tmp[32];
-    SHA256_Final(tmp, &state->inner);
-    SHA256_Update(&state->outer, tmp, 32);
-    SHA256_Final(result, &state->outer);
+    sph_sha256_close(&state->inner, tmp);
+    sph_sha256(&state->outer, tmp, 32);
+    sph_sha256_close(&state->outer, result);
 }
 
 #ifdef TEST

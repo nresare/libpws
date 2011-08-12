@@ -21,6 +21,9 @@
 		CC331A6113F2C74300998821 /* liblibpws.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CC331A3A13F2B56E00998821 /* liblibpws.dylib */; };
 		CC331A6313F43CD800998821 /* decrypt.h in Headers */ = {isa = PBXBuildFile; fileRef = CC331A6213F43CD800998821 /* decrypt.h */; };
 		CC331A6513F43D4E00998821 /* decrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = CC331A6413F43D4D00998821 /* decrypt.c */; };
+		CC331A7813F5668C00998821 /* sha2.c in Sources */ = {isa = PBXBuildFile; fileRef = CC331A7413F5668C00998821 /* sha2.c */; };
+		CC331A7913F5668C00998821 /* sph_sha2.h in Headers */ = {isa = PBXBuildFile; fileRef = CC331A7513F5668C00998821 /* sph_sha2.h */; };
+		CC331A7A13F5668C00998821 /* sph_types.h in Headers */ = {isa = PBXBuildFile; fileRef = CC331A7613F5668C00998821 /* sph_types.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,6 +55,9 @@
 		CC331A5F13F2C6C500998821 /* pws.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pws.h; sourceTree = "<group>"; };
 		CC331A6213F43CD800998821 /* decrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decrypt.h; sourceTree = "<group>"; };
 		CC331A6413F43D4D00998821 /* decrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = decrypt.c; sourceTree = "<group>"; };
+		CC331A7413F5668C00998821 /* sha2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha2.c; path = sph/sha2.c; sourceTree = "<group>"; };
+		CC331A7513F5668C00998821 /* sph_sha2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sph_sha2.h; path = sph/sph_sha2.h; sourceTree = "<group>"; };
+		CC331A7613F5668C00998821 /* sph_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sph_types.h; path = sph/sph_types.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +83,9 @@
 		CC331A2F13F2B56E00998821 = {
 			isa = PBXGroup;
 			children = (
+				CC331A7413F5668C00998821 /* sha2.c */,
+				CC331A7513F5668C00998821 /* sph_sha2.h */,
+				CC331A7613F5668C00998821 /* sph_types.h */,
 				CC331A6213F43CD800998821 /* decrypt.h */,
 				CC331A4F13F2C46800998821 /* twofish.h */,
 				CC331A4D13F2C45500998821 /* twofish.c */,
@@ -123,6 +132,8 @@
 				CC331A5013F2C46800998821 /* twofish.h in Headers */,
 				CC331A6013F2C6C500998821 /* pws.h in Headers */,
 				CC331A6313F43CD800998821 /* decrypt.h in Headers */,
+				CC331A7913F5668C00998821 /* sph_sha2.h in Headers */,
+				CC331A7A13F5668C00998821 /* sph_types.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +207,7 @@
 				CC331A4C13F2C40B00998821 /* pws.c in Sources */,
 				CC331A4E13F2C45500998821 /* twofish.c in Sources */,
 				CC331A6513F43D4E00998821 /* decrypt.c in Sources */,
+				CC331A7813F5668C00998821 /* sha2.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +316,7 @@
 				CC331A4013F2B56E00998821 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CC331A5C13F2C4BA00998821 /* Build configuration list for PBXNativeTarget "pws" */ = {
 			isa = XCConfigurationList;
@@ -312,6 +325,7 @@
 				CC331A5E13F2C4BA00998821 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

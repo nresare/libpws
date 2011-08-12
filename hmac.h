@@ -1,14 +1,14 @@
 /* Copyright © 2011 Noa Resare */
 
-#include <openssl/sha.h>
+#include "sph_sha2.h"
 
 /*
  * Implements the hmac algorithm as described in RFC2104 using SHA256 as hashing algorithm.
  */
 
 typedef struct hmac_state {
-    SHA256_CTX inner;
-    SHA256_CTX outer;
+    sph_sha256_context inner;
+    sph_sha256_context outer;
 } hmac_state;
 
 

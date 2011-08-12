@@ -40,11 +40,11 @@ int buf_read(buf_state *state, int count, unsigned char **target) {
             return -1;
         } else {
             // move remaining data to beginning of buffer
-            int move_count = state->end - state->start;
+            ssize_t move_count = state->end - state->start;
             
             memcpy(state->buf, state->buf + state->start, move_count);
 
-            int read_count = read(state->fd, state->buf + move_count, 
+            ssize_t read_count = read(state->fd, state->buf + move_count, 
                               state->size - move_count);
             if (read_count == -1) {
                 return -2;
