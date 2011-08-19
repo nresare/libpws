@@ -11,7 +11,6 @@
 		CC331A4413F2B64100998821 /* hmac.h in Headers */ = {isa = PBXBuildFile; fileRef = CC331A4313F2B64100998821 /* hmac.h */; };
 		CC331A4613F2B6A900998821 /* buf.h in Headers */ = {isa = PBXBuildFile; fileRef = CC331A4513F2B6A900998821 /* buf.h */; };
 		CC331A4813F2B6C900998821 /* buf.c in Sources */ = {isa = PBXBuildFile; fileRef = CC331A4713F2B6C900998821 /* buf.c */; };
-		CC331A4A13F2C2D200998821 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CC331A4913F2C2D200998821 /* libcrypto.dylib */; };
 		CC331A4C13F2C40B00998821 /* pws.c in Sources */ = {isa = PBXBuildFile; fileRef = CC331A4B13F2C40B00998821 /* pws.c */; };
 		CC331A4E13F2C45500998821 /* twofish.c in Sources */ = {isa = PBXBuildFile; fileRef = CC331A4D13F2C45500998821 /* twofish.c */; };
 		CC331A5013F2C46800998821 /* twofish.h in Headers */ = {isa = PBXBuildFile; fileRef = CC331A4F13F2C46800998821 /* twofish.h */; };
@@ -65,7 +64,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC331A4A13F2C2D200998821 /* libcrypto.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
