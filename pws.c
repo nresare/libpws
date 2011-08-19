@@ -7,6 +7,7 @@
 #include <sys/uio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "sph_sha2.h"
 
@@ -66,10 +67,24 @@ typedef struct header {
     unsigned char key[32], iv[16], hmac_key[32];
 } header;
 
+static void add_field(field *f, field **fields) {
+    field *cur = *fields;
+    
+    assert(f->next == NULL);
+    if (cur == NULL) {
+        *fields = f;
+        return;
+    }
+    while (cur->next != NULL) {
+        cur = cur->next;
+    }
+    cur->next = f;
+}
+
 /**
  * Reads the data blocks from buf and adds the found data to the fields linked list.
  * 
- * @return 0 on success, -1 if the checksum check fails.
+ * @return 0 on success, -1 if the checksum check fails, -2 if malloc fails
  */
 static int read_blocks(header *hdr, buf_state *buf, field **fields)
 {
@@ -77,6 +92,10 @@ static int read_blocks(header *hdr, buf_state *buf, field **fields)
     unsigned char *p, tmp[16], *data_target, hmac_data[32];
     cbc_state cbc;
     hmac_state hmac;
+    field *f = malloc(sizeof(field));
+    if (!f) {
+        return -2;
+    }
     
     decrypt_setup(&cbc, hdr->key, hdr->iv);
     
@@ -89,16 +108,21 @@ static int read_blocks(header *hdr, buf_state *buf, field **fields)
             break;
         }
         decrypt_cbc(&cbc, p, tmp);
-
+        assert(f->next == NULL);
         field_size = read_uint32_le(tmp);
+        f->type = *(tmp + 4);
+        assert(f->next == NULL);
 
         if (field_size > 0) {
             data_target = malloc(field_size);
+            if (data_target == NULL) {
+                return -2;
+            }
             memcpy(data_target, tmp + 5, field_size > 11 ? 11 : field_size);
         }
 
         extra_blocks = (field_size + 4) / 16;
-        
+
         for (i = 0; i < extra_blocks; i++) {
             int offset = 11 + (i * 16);
             int len = field_size - offset > 16 ? 16 : field_size - offset;
@@ -106,12 +130,21 @@ static int read_blocks(header *hdr, buf_state *buf, field **fields)
             decrypt_cbc(&cbc, p, tmp);
             memcpy(data_target + offset, tmp, len);
         }
-        printf("record size: %d\n", field_size);
+        f->len = field_size;
+
+
         if (field_size > 0) {
-            print_hex(data_target, field_size);
             hmac_update(&hmac, data_target, field_size);
+            f->data = data_target;
         }
 
+        add_field(f, fields);
+        f = malloc(sizeof(field));
+        if (!f) {
+            return -2;
+        }
+        memset(f, 0, sizeof(f));
+        
     }
     buf_read(buf, 32, &p);
     hmac_result(&hmac, hmac_data);
@@ -174,7 +207,7 @@ int pws_read_safe(char *filename, char *password)
     int retval;
     header hdr;
     
-    field *fields;
+    field *fields = NULL;
     
     buf_state *buf;
     unsigned char *p;
@@ -200,6 +233,14 @@ int pws_read_safe(char *filename, char *password)
         buf_close(buf);
         return retval;
     }    
+    
+    field *cur = fields;
+    while (cur) {
+        printf("type: %d size: %d data:", cur->type, cur->len); 
+        print_hex(cur->data, cur->len);
+        cur = cur->next;
+    }
+    
     buf_close(buf);
     return 0;
 }
