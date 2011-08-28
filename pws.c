@@ -55,7 +55,6 @@ static void stretch(char *password, unsigned char *salt, int iterations, unsigne
     memcpy(target, tmp, 32);    
 }
 
-
 typedef struct field {
     int len;
     unsigned char type;
@@ -202,7 +201,7 @@ static int read_header(header *hdr, char *password, buf_state *buf)
     return 0;
 }
 
-int pws_read_safe(char *filename, char *password)
+int pws_read_safe(char *filename, char *password, pws_database **database)
 {
     int retval;
     header hdr;
