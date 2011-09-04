@@ -201,6 +201,45 @@ static int read_header(header *hdr, char *password, buf_state *buf)
     return 0;
 }
 
+static int make_database(field *fields, pws_database **database)
+{
+    pws_database *db = *database;
+    if (((db = malloc(sizeof(pws_database))) == NULL)) {
+        return -1;
+    }
+    db->header_count = 0;
+    db->record_count = -1;
+
+    field *cur = fields;
+    while (cur) {
+        if (db->record_count == -1) {
+            if (cur->type == 255) {
+                db->record_count = 0;
+            } else {
+                db->header_count++;
+            }
+        } else {
+            if (cur->type == 255) {
+                db->record_count++;
+            }
+        }
+        cur = cur->next;
+    }
+    printf("Found %d headers and %d records\n", db->header_count, db->record_count);
+    
+    if (((db->headers = malloc(sizeof(pws_field*) * db->header_count)) == NULL)) {
+        return -1;
+    }
+    
+    if (((db->records = malloc(sizeof(pws_record*) * db->record_count)) == NULL)) {
+        return -1;
+    }
+    
+    
+    
+    return 0;
+}
+
 int pws_read_safe(char *filename, char *password, pws_database **database)
 {
     int retval;
@@ -233,13 +272,10 @@ int pws_read_safe(char *filename, char *password, pws_database **database)
         return retval;
     }    
     
-    field *cur = fields;
-    while (cur) {
-        printf("type: %d size: %d data:", cur->type, cur->len); 
-        print_hex(cur->data, cur->len);
-        cur = cur->next;
+    if ((make_database(fields, database))) {
+        buf_close(buf);
+        return retval;
     }
-    
     buf_close(buf);
     return 0;
 }

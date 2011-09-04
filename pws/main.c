@@ -14,8 +14,9 @@ int main(int argc, char **argv)
     int retval;
 
     printf("PWD is '%s'\n", getenv("PWD"));
+    pws_database *database;
     
-    if ((retval = pws_read_safe(FILENAME, "test"))) {
+    if ((retval = pws_read_safe(FILENAME, "test", &database))) {
         fprintf(stderr, "pws_read_safe() returned %d\n", retval);
         fprintf(stderr, "Could not open '%s': %s\n", FILENAME, strerror(errno));
     }
