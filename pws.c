@@ -17,15 +17,6 @@
 #include "pws.h"
 #include "decrypt.h"
 
-static void print_hex(unsigned char *data, int len)
-{
-    int i;
-    for (i = 0; i < len; i++) {
-      printf("%02hhx ", data[i]);
-    }
-    printf("\n");
-}
-
 static unsigned int read_uint32_le(unsigned char *buf)
 {
     return buf[0] + ((int)buf[1] << 8) + ((int)buf[2] << 16) + ((int)buf[3] << 24);
@@ -110,7 +101,6 @@ static int read_blocks(header *hdr, buf_state *buf, field **fields)
         assert(f->next == NULL);
         field_size = read_uint32_le(tmp);
         f->type = *(tmp + 4);
-        assert(f->next == NULL);
 
         if (field_size > 0) {
             data_target = malloc(field_size);
@@ -156,7 +146,7 @@ static int read_blocks(header *hdr, buf_state *buf, field **fields)
 }
 
 /**
- * Reads the fixed header fields from verifies the password and populdates 
+ * Reads the fixed header fields from verifies the password and populates 
  * the header fields.
  * 
  * @return 0 on success, -1 if the password check fails.
@@ -204,6 +194,9 @@ static int read_header(header *hdr, char *password, buf_state *buf)
 static int make_database(field *fields, pws_database **database)
 {
     pws_database *db = *database;
+    int record_idx = -1;
+    int field_idx = 0;
+    
     if (((db = malloc(sizeof(pws_database))) == NULL)) {
         return -1;
     }
@@ -227,16 +220,55 @@ static int make_database(field *fields, pws_database **database)
     }
     printf("Found %d headers and %d records\n", db->header_count, db->record_count);
     
-    if (((db->headers = malloc(sizeof(pws_field*) * db->header_count)) == NULL)) {
+    if (((db->headers = malloc(sizeof(pws_field) * db->header_count)) == NULL)) {
         return -1;
     }
     
-    if (((db->records = malloc(sizeof(pws_record*) * db->record_count)) == NULL)) {
+    if (((db->records = malloc(sizeof(pws_record) * db->record_count)) == NULL)) {
         return -1;
     }
     
+    // count the number of fields in each record.
+    cur = fields;
+    while (cur) {
+        if (cur->type == 255) {
+            if (record_idx > -1) {
+                db->records[record_idx].field_count = field_idx;
+                if (((db->records[record_idx].fields = malloc(sizeof(pws_field) * field_idx)) == NULL)) {
+                    return -1;
+                }
+            }
+            record_idx++;
+            field_idx = 0;
+        } else {
+            field_idx++;
+        }
+        cur = cur->next;
+    }
+
+    record_idx = -1;
     
-    
+    // populate headers and records
+    cur = fields;
+    while (cur) {
+        if (cur->type == 255) {
+            record_idx++;
+            field_idx = 0;
+        } else {
+            if (record_idx == -1) {
+                db->headers[field_idx].type = cur->type;
+                db->headers[field_idx].value_length = cur->len;
+                db->headers[field_idx].value = cur->data;
+            } else {
+                db->records[record_idx].fields[field_idx].type = cur->type;
+                db->records[record_idx].fields[field_idx].value_length = cur->len;
+                db->records[record_idx].fields[field_idx].value = cur->data;
+            }
+            field_idx++;
+        }
+        cur = cur->next;
+    }
+    *database = db;
     return 0;
 }
 
