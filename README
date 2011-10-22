@@ -1,0 +1,53 @@
+This is a portable implementation of the format used in the password safe application.
+
+It is written by Noa Resare (noa@resare.com) and released using the GPLv3 license.
+
+The design goal of this implementation is that it should be limited in it's dependencies
+on other libraries, more specifically it includes code for all cryptographic functionality
+it needs.
+
+This code was written based on the format specification available in the file formatv3.txt from
+pwsafe-3.26-src.zip available at http://sourceforge.net/projects/passwordsafe
+
+The following third party code is included in this distribution. To the best of my knowledge,
+the code included has a license compatible with GPLv3. If you believe this to be in error,
+please do not hesitate to contact me and I will do my best to sort this out.
+
+== SHA256 ==
+* from the sphlib 3.0 distribution available from http://www.saphir2.com/sphlib/
+* This is a basic MIT X11 style BSD license http://en.wikipedia.org/wiki/MIT_License
+
+Copyright (c) 2007-2010  Projet RNRT SAPHIR
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+== twofish ==
+* Written by Nils Fergusson, with a very liberal license.
+* I've copied it from the libtwofish package in debian
+
+Fast, portable, and easy-to-use Twofish implementation,
+Version 0.3.
+Copyright (c) 2002 by Niels Ferguson.
+
+See the twofish.c file for the details of the how and why of this code.
+
+The author hereby grants a perpetual license to everybody to
+use this code for any purpose as long as the copyright message is included
+ in the source code of this or any derived work.

@@ -15,7 +15,6 @@
 		CC331A4E13F2C45500998821 /* twofish.c in Sources */ = {isa = PBXBuildFile; fileRef = CC331A4D13F2C45500998821 /* twofish.c */; };
 		CC331A5013F2C46800998821 /* twofish.h in Headers */ = {isa = PBXBuildFile; fileRef = CC331A4F13F2C46800998821 /* twofish.h */; };
 		CC331A5913F2C4BA00998821 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = CC331A5813F2C4BA00998821 /* main.c */; };
-		CC331A5B13F2C4BA00998821 /* pws.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = CC331A5A13F2C4BA00998821 /* pws.1 */; };
 		CC331A6013F2C6C500998821 /* pws.h in Headers */ = {isa = PBXBuildFile; fileRef = CC331A5F13F2C6C500998821 /* pws.h */; };
 		CC331A6113F2C74300998821 /* liblibpws.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CC331A3A13F2B56E00998821 /* liblibpws.dylib */; };
 		CC331A6313F43CD800998821 /* decrypt.h in Headers */ = {isa = PBXBuildFile; fileRef = CC331A6213F43CD800998821 /* decrypt.h */; };
@@ -32,7 +31,6 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				CC331A5B13F2C4BA00998821 /* pws.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -50,13 +48,14 @@
 		CC331A4F13F2C46800998821 /* twofish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twofish.h; sourceTree = "<group>"; };
 		CC331A5513F2C4BA00998821 /* pws */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pws; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC331A5813F2C4BA00998821 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		CC331A5A13F2C4BA00998821 /* pws.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = pws.1; sourceTree = "<group>"; };
 		CC331A5F13F2C6C500998821 /* pws.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pws.h; sourceTree = "<group>"; };
 		CC331A6213F43CD800998821 /* decrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decrypt.h; sourceTree = "<group>"; };
 		CC331A6413F43D4D00998821 /* decrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = decrypt.c; sourceTree = "<group>"; };
 		CC331A7413F5668C00998821 /* sha2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha2.c; path = sph/sha2.c; sourceTree = "<group>"; };
 		CC331A7513F5668C00998821 /* sph_sha2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sph_sha2.h; path = sph/sph_sha2.h; sourceTree = "<group>"; };
 		CC331A7613F5668C00998821 /* sph_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sph_types.h; path = sph/sph_types.h; sourceTree = "<group>"; };
+		CCB25D641452D2A0002591EC /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		CCB25D651452DC84002591EC /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +80,8 @@
 		CC331A2F13F2B56E00998821 = {
 			isa = PBXGroup;
 			children = (
+				CCB25D651452DC84002591EC /* COPYING */,
+				CCB25D641452D2A0002591EC /* README */,
 				CC331A7413F5668C00998821 /* sha2.c */,
 				CC331A7513F5668C00998821 /* sph_sha2.h */,
 				CC331A7613F5668C00998821 /* sph_types.h */,
@@ -113,7 +114,6 @@
 			isa = PBXGroup;
 			children = (
 				CC331A5813F2C4BA00998821 /* main.c */,
-				CC331A5A13F2C4BA00998821 /* pws.1 */,
 			);
 			path = pws;
 			sourceTree = "<group>";
@@ -177,6 +177,9 @@
 /* Begin PBXProject section */
 		CC331A3113F2B56E00998821 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = CC331A3413F2B56E00998821 /* Build configuration list for PBXProject "libpws" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
