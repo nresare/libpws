@@ -2,6 +2,9 @@ This is a portable implementation of the format used in the password safe applic
 
 It is written by Noa Resare (noa@resare.com) and released using the GPLv3 license.
 
+WARNING: this is early work in progress, it only implements reading. Doesn't free
+allocated memory properly. From now, please stay away from it!
+
 The design goal of this implementation is that it should be limited in it's dependencies
 on other libraries, more specifically it includes code for all cryptographic functionality
 it needs.
