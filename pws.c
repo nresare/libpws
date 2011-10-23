@@ -148,12 +148,12 @@ static int read_blocks(header *hdr, buf_state *buf, field **fields)
         if (!f) {
             return -2;
         }
-        memset(f, 0, sizeof(f));
+        memset(f, 0, sizeof(*f));
         
     }
     buf_read(buf, 32, &p);
     hmac_result(&hmac, hmac_data);
-    i = memcmp(hmac_data, p, 32); 
+    i = memcmp(hmac_data, p, 32);
     if (i == 0) {
         return 0;
     } else {
@@ -219,6 +219,7 @@ static int make_database(field *fields, pws_database **database)
     db->header_count = 0;
     db->record_count = -1;
 
+    field *next;
     field *cur = fields;
     while (cur) {
         if (db->record_count == -1) {
@@ -284,6 +285,16 @@ static int make_database(field *fields, pws_database **database)
         }
         cur = cur->next;
     }
+    
+    // free the fields list
+    cur = fields;
+    while (cur) {
+        next = cur->next;
+        free(cur);
+        cur = next;
+    }
+    
+    
     *database = db;
     return 0;
 }
