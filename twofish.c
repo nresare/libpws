@@ -1228,7 +1228,7 @@ static int Twofish_initialised = 0;
  * This routine also does some sanity checks, to make sure that
  * all the macros behave, and it tests the whole cipher.
  */
-void Twofish_initialise()
+void Twofish_initialise(void)
     {
     /* First test the various platform-specific definitions. */
     test_platform();
